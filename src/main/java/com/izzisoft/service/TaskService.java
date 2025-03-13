@@ -1,6 +1,6 @@
-package org.example.service;
+package com.izzisoft.service;
 
-import org.example.model.Task;
+import com.izzisoft.model.Task;
 
 import java.util.List;
 

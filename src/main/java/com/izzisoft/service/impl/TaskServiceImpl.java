@@ -1,8 +1,8 @@
-package org.example.service.impl;
+package com.izzisoft.service.impl;
 
-import org.example.model.Task;
-import org.example.repo.TaskRepo;
-import org.example.service.TaskService;
+import com.izzisoft.repo.TaskRepo;
+import com.izzisoft.model.Task;
+import com.izzisoft.service.TaskService;
 
 import java.util.List;
 

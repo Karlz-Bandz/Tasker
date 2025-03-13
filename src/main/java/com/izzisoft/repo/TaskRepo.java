@@ -1,6 +1,6 @@
-package org.example.repo;
+package com.izzisoft.repo;
 
-import org.example.model.Task;
+import com.izzisoft.model.Task;
 
 import java.util.ArrayList;
 import java.util.List;

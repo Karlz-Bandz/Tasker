@@ -1,4 +1,4 @@
-package org.example.model;
+package com.izzisoft.model;
 
 public class Task {
 

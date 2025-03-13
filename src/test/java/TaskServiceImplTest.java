@@ -1,6 +1,6 @@
-import org.example.model.Task;
-import org.example.repo.TaskRepo;
-import org.example.service.impl.TaskServiceImpl;
+import com.izzisoft.model.Task;
+import com.izzisoft.repo.TaskRepo;
+import com.izzisoft.service.impl.TaskServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
