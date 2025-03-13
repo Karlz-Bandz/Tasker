@@ -4,6 +4,7 @@ import com.izzisoft.model.Task;
 import com.izzisoft.service.TaskService;
 import com.izzisoft.service.impl.TaskServiceImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -40,9 +41,12 @@ public class TaskerCLI {
                     deleteTask();
                     break;
                 case "4":
-                    showAllTasks();
+                    showAllFilteredTasks();
                     break;
                 case "5":
+                    taskService.clearAllTasks();
+                    break;
+                case "6":
                     gamePlay = false;
                     break;
                 default:
@@ -51,31 +55,76 @@ public class TaskerCLI {
                     System.out.println();
                     break;
             }
+
+            if (gamePlay) {
+                System.out.println("Press enter...");
+                scanner.nextLine();
+            }
         }
     }
 
     private void showAllTasks() {
-        int index = 0;
         List<Task> allTasks = taskService.getAllTasks();
+        int indexValue = 0;
 
         for (Task t : allTasks) {
             System.out.println("=======================");
-            System.out.println(index + ". " + t.getDescription());
+            System.out.println(indexValue + ". " + t.getDescription());
             System.out.println("Finished: " + t.isFinished());
             System.out.println("=======================");
 
-            index++;
+            indexValue++;
+        }
+    }
+
+    private void showAllFilteredTasks() {
+        List<Task> tasks = new ArrayList<>();
+
+        System.out.println("=======================");
+        System.out.println("1. Finished tasks =====");
+        System.out.println("2. Pending tasks ======");
+        System.out.println("=======================");
+
+        String taskPattern = scanner.nextLine();
+
+        if (taskPattern.equals("1")) {
+            tasks = taskService.getFinishedTasks();
+            System.out.println("=======FINISHED========");
+            System.out.println("Total: " + tasks.size());
+            System.out.println("=======================");
+
+        } else if (taskPattern.equals("2")) {
+            tasks = taskService.getPendingTasks();
+            System.out.println("=======PENDING=========");
+            System.out.println("Total: " + tasks.size());
+            System.out.println("=======================");
+        } else {
+            System.out.println("Wrong pattern!");
+        }
+
+        for (Task t : tasks) {
+            System.out.println("Description:" + t.getDescription());
+            System.out.println("Finished: " + t.isFinished());
+            System.out.println("=======================");
         }
     }
 
     private void deleteTask() {
-        taskService.deleteLastTask();
+        boolean isDeleted = taskService.deleteLastTask();
 
-        System.out.println("=======================");
-        System.out.println("%$^&*^$@#$%^&*((*&^%$#@");
-        System.out.println("The last task =========");
-        System.out.println("deleted ===============");
-        System.out.println("%$^&*^$@#$%^&*((*&^%$#@");
+        if (isDeleted) {
+            System.out.println("=======================");
+            System.out.println("%$^&*^$@#$%^&*((*&^%$#@");
+            System.out.println("The last task =========");
+            System.out.println("deleted ===============");
+            System.out.println("%$^&*^$@#$%^&*((*&^%$#@");
+        } else {
+            System.out.println("%$^&*^$@#$%^&*((*&^%$#@");
+            System.out.println("=======================");
+            System.out.println("=======E-M-P-T-Y=======");
+            System.out.println("=======================");
+            System.out.println("%$^&*^$@#$%^&*((*&^%$#@");
+        }
     }
 
     private void finishTask() {
@@ -94,6 +143,7 @@ public class TaskerCLI {
         System.out.println("Task has been =========");
         System.out.println("finished ==============");
         System.out.println("%$^&*^$@#$%^&*((*&^%$#@");
+        scanner.nextLine();
     }
 
     private void addTask() {
@@ -119,6 +169,7 @@ public class TaskerCLI {
         System.out.println("2. Finish task ========");
         System.out.println("3. Del last task ======");
         System.out.println("4. Show all ===========");
-        System.out.println("5. Exit ===============");
+        System.out.println("5. Clear all ==========");
+        System.out.println("6. Exit ===============");
     }
 }

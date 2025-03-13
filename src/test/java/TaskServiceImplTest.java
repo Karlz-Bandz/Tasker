@@ -27,29 +27,52 @@ class TaskServiceImplTest {
 
         Task task2 = new Task();
         task2.setDescription("test2");
-        task2.setFinished(false);
+        task2.setFinished(true);
+
+        Task task3 = new Task();
+        task3.setDescription("test2");
+        task3.setFinished(false);
 
         taskRepo.clearTasks();
         taskRepo.addTask(task1);
         taskRepo.addTask(task2);
+        taskRepo.addTask(task3);
     }
 
     @Test
     void addNewTaskTest() {
         taskService.addNewTask("test3");
-        assertEquals(3, taskService.getAllTasks().size());
+        assertEquals(4, taskRepo.getAllTasks().size());
     }
 
     @Test
     void deleteLastTaskTest() {
         taskService.deleteLastTask();
-        assertEquals(1, taskService.getAllTasks().size());
+        assertEquals(2, taskRepo.getAllTasks().size());
+    }
+
+    @Test
+    void getPendingTasksTest() {
+        List<Task> pendingTasks = taskService.getPendingTasks();
+        assertEquals(2, pendingTasks.size());
+    }
+
+    @Test
+    void getFinishedTasksTest() {
+        List<Task> finishedTasks = taskService.getFinishedTasks();
+        assertEquals(1, finishedTasks.size());
     }
 
     @Test
     void getAllTasksTest() {
-        List<Task> allTasks = taskService.getAllTasks();
-        assertEquals(2, allTasks.size());
+        List<Task> finishedTasks = taskService.getAllTasks();
+        assertEquals(3, finishedTasks.size());
+    }
+
+    @Test
+    void clearAllTasksTest() {
+        taskService.clearAllTasks();
+        assertEquals(0, taskRepo.getAllTasks().size());
     }
 
     @Test

@@ -7,9 +7,15 @@ import java.util.List;
 public interface TaskService {
     void addNewTask(String taskDescription);
 
-    void deleteLastTask();
+    boolean deleteLastTask();
 
     List<Task> getAllTasks();
+
+    List<Task> getFinishedTasks();
+
+    List<Task> getPendingTasks();
+
+    void clearAllTasks();
 
     void changeTaskDescriptionByIndex(int index, String newTaskDescription);
 

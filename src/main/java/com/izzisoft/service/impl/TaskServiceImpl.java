@@ -23,13 +23,37 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void deleteLastTask() {
-        taskRepo.getAllTasks().removeLast();
+    public boolean deleteLastTask() {
+        if (taskRepo.getAllTasks().isEmpty()) {
+            return false;
+        } else {
+            taskRepo.getAllTasks().removeLast();
+            return true;
+        }
     }
 
     @Override
     public List<Task> getAllTasks() {
         return taskRepo.getAllTasks();
+    }
+
+    @Override
+    public List<Task> getFinishedTasks() {
+        return taskRepo.getAllTasks().stream()
+                .filter(Task::isFinished)
+                .toList();
+    }
+
+    @Override
+    public List<Task> getPendingTasks() {
+        return taskRepo.getAllTasks().stream()
+                .filter(x -> !x.isFinished())
+                .toList();
+    }
+
+    @Override
+    public void clearAllTasks() {
+        taskRepo.clearTasks();
     }
 
     @Override
